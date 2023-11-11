@@ -21,7 +21,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //services
 builder.Services.AddTransient<ISubRedditService, SubRedditServiceImpl>();
 builder.Services.AddTransient<IPostService, PostServiceImpl>(); 
-
+builder.Services.AddTransient<ICommentService, CommentServiceImpl>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

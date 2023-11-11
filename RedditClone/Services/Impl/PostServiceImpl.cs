@@ -21,9 +21,20 @@ namespace RedditClone.Services.Impl
             return create.Entity;
         }
 
-        public Task<Post> Get()
+        public async void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var postId = await _context.Posts.FirstOrDefaultAsync(x=>x.Id == id);
+            if(postId !=null)
+            {
+                _context.Posts.Remove(postId);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<Post>> Get()
+        {
+            var post = await _context.Posts.ToListAsync();
+            return post;
         }
 
         public async Task<Post> GetById(int id)

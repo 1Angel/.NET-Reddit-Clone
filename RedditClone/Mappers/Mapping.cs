@@ -25,6 +25,8 @@ namespace RedditClone.Mappers
 
             //comments
             CreateMap<CreateCommentDto, Comment>();
+
+            CreateMap<Comment, CommentDto>();
         }
     }
 }

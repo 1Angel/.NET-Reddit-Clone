@@ -40,5 +40,18 @@ namespace RedditClone.Controllers
             var post = _mapper.Map<PostDto>(postid);
             return Ok(post);
         }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            var postId = await _postService.GetById(id);
+            if(postId == null)
+            {
+                return NotFound();
+            }
+            _postService.DeleteById(id);
+            return Ok();
+
+        }
     }
 }
