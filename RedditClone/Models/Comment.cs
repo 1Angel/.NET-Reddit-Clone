@@ -10,6 +10,8 @@ namespace RedditClone.Models
         public int PostId { get; set; }
         public Post Post { get; set; }
 
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
         public DateTime createdAt { get; set; } = DateTime.Now;
     }
 }

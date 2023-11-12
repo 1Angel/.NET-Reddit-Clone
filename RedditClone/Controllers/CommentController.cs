@@ -7,6 +7,7 @@ using RedditClone.Services;
 namespace RedditClone.Controllers
 {
     [ApiController]
+    [Route("api/[Controller]")]
     public class CommentController: ControllerBase
     {
         private readonly ICommentService   _commentService;
@@ -21,12 +22,11 @@ namespace RedditClone.Controllers
         }
 
         [HttpPost("create/{id}/comments")]
-        public async Task<ActionResult<CommentDto>> Create([FromBody] CreateCommentDto createCommentDto, [FromRoute] int id)
+        public async Task<ActionResult<Comment>> Create([FromBody] CreateCommentDto createCommentDto, [FromRoute] int id)
         {
             var comment = _mapper.Map<Comment>(createCommentDto);
             var create = await _commentService.Create(comment, id);
-            return CreatedAtAction("GetById", new { id = create.Id }, create);
-
+            return Ok();
         }
 
         [HttpGet("{id}")]

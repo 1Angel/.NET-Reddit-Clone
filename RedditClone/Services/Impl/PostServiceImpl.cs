@@ -39,7 +39,7 @@ namespace RedditClone.Services.Impl
 
         public async Task<Post> GetById(int id)
         {
-            var postId = await _context.Posts.FirstOrDefaultAsync(x=>x.Id == id);
+            var postId = await _context.Posts.Include(x=>x.Comments).FirstOrDefaultAsync(x=>x.Id == id);
             return postId;
         }
     }
