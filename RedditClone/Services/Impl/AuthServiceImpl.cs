@@ -1,15 +1,44 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using RedditClone.Dtos;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace RedditClone.Services.Impl
 {
     public class AuthServiceImpl : IAuthService
     {
         private readonly UserManager<IdentityUser> _userManager;
-        public AuthServiceImpl(UserManager<IdentityUser> userManager)
+        private readonly IConfiguration _configuration;
+        public AuthServiceImpl(UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
+
+        public string GeneratedToken(IdentityUser user)
+        {
+
+            var key = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:JwtSecretKey").Value);
+
+            var jwtHandler = new JwtSecurityTokenHandler();
+
+            var claim = new List<Claim>()
+            {
+                new Claim("Id", user.Id),
+                new Claim("UserName", user.UserName),
+                new Claim("Email", user.Email)
+            };
+
+            var expire = DateTime.Now.AddMonths(1);
+            var SignalCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+            var securityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claim, expires: expire, signingCredentials: SignalCredentials);
+            
+            var token = jwtHandler.WriteToken(securityToken);
+            return token;
+        }
+
         public async Task<AuthReponse> Login(LoginUserDto loginUserDto)
         {
             var emailExist = await _userManager.FindByEmailAsync(loginUserDto.Email);
@@ -34,11 +63,13 @@ namespace RedditClone.Services.Impl
                 };
             }
 
+            var token = GeneratedToken(emailExist);
             return new AuthReponse()
             {
                 StatusCode = StatusCodes.Status200OK,
                 Message = "User loggedin successfully",
-                IsSucceed = true
+                IsSucceed = true,
+                Token = token
             };
         }
 
@@ -77,11 +108,14 @@ namespace RedditClone.Services.Impl
                 };
             }
 
+            var token = GeneratedToken(user);
+
             return new AuthReponse()
             {
                 StatusCode = StatusCodes.Status200OK,
                 IsSucceed = true,
-                Message = "User Created Successfully"
+                Message = "User Created Successfully",
+                Token = token
             };
         }
     }

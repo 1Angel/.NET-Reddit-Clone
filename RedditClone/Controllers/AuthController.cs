@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RedditClone.Dtos;
 using RedditClone.Services;
+using System.Security.Claims;
 
 namespace RedditClone.Controllers
 {
@@ -36,7 +38,15 @@ namespace RedditClone.Controllers
                 return Ok(loginUser);
             }
             return BadRequest(loginUser);
-        } 
+        }
 
+        [Authorize]
+        [HttpGet("test")]
+        public string HOla()
+        {
+            var user = User.Claims.Where(a=>a.Type =="Id").FirstOrDefault()?.Value;
+
+            return user;
+        }
     }
 }

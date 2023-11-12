@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedditClone.Dtos;
 using RedditClone.Models;
@@ -19,6 +20,7 @@ namespace RedditClone.Controllers
             this.mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<SubredditDto>>> Get()
         {
