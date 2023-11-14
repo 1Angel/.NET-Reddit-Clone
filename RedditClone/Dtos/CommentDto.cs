@@ -6,6 +6,8 @@ namespace RedditClone.Dtos
     {
         public int Id { get; set; }
         public string Description { get; set; }
+        public UserInfoDto AppUser { get; set; }
+
         public DateTime createdAt { get; set; } = DateTime.Now;
     }
 }

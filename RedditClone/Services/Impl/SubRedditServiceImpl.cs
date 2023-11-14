@@ -13,8 +13,9 @@ namespace RedditClone.Services.Impl
             _context = context;
         }
 
-        public async Task<SubReddit> Create(SubReddit subreddit)
+        public async Task<SubReddit> Create(SubReddit subreddit, string UserId)
         {
+            subreddit.AppUserId = UserId;
             var reddit = await _context.Subreddits.AddAsync(subreddit);   
             await _context.SaveChangesAsync();
             return reddit.Entity;

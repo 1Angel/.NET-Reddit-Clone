@@ -44,9 +44,11 @@ namespace RedditClone.Controllers
         [HttpGet("test")]
         public string HOla()
         {
-            var user = User.Claims.Where(a=>a.Type =="Id").FirstOrDefault()?.Value;
-
-            return user;
+            var user = HttpContext.User.Claims.Where(a=>a.Type == "Id").FirstOrDefault();
+            var email = User.Claims.Where(x=>x.Type == "Email").FirstOrDefault();
+            return user + " "+email;
         }
+
+       
     }
 }

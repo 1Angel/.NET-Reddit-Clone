@@ -14,11 +14,12 @@ namespace RedditClone.Services.Impl
 
         public AppDbContext Context { get; }
 
-        public async Task<Comment> Create(Comment comment, int id)
+        public async Task<Comment> Create(Comment comment, int id, string UserId)
         {
             var postId = await _context.Posts.FirstOrDefaultAsync(p=>p.Id == id);
 
             comment.PostId = id;
+            comment.AppUserId = UserId;
             var create = await _context.Comments.AddAsync(comment);
             await _context.SaveChangesAsync();
             return create.Entity;

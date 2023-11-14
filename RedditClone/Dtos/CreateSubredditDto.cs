@@ -11,7 +11,7 @@ namespace RedditClone.Dtos
 
         [Required(ErrorMessage = "el campo es obligatorio")]
         [MinLength(4)]
-        [MaxLength(30)]
+        [MaxLength(300)]
         public string Description { get; set; }
 
     }

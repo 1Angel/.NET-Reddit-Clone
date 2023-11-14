@@ -20,7 +20,6 @@ namespace RedditClone.Controllers
             this.mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<SubredditDto>>> Get()
         {
@@ -46,11 +45,14 @@ namespace RedditClone.Controllers
             return Ok(subReddit);
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<ActionResult> Create([FromBody] CreateSubredditDto createSubredditDto)
         {
+            var UserId = User.Claims.Where(a => a.Type == "Id").FirstOrDefault()?.Value;
+
             var subreddit = mapper.Map<SubReddit>(createSubredditDto);
-            var create =  await _subRedditService.Create(subreddit);
+            var create =  await _subRedditService.Create(subreddit, UserId);
             return CreatedAtAction("GetById", new { id = create.Id }, create);
 
         }

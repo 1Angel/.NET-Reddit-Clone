@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedditClone.Dtos;
 using RedditClone.Models;
@@ -18,13 +19,17 @@ namespace RedditClone.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpPost("create/{id}")]
         public async Task<ActionResult<Post>> Create([FromBody] CreatePostDto createPostDto, [FromRoute] int id)
         {
+            var UserId = User.Claims.Where(a => a.Type == "Id").FirstOrDefault()?.Value;
+
             var post = _mapper.Map<Post>(createPostDto);
 
-            var create = await _postService.Create(post, id);
-            return create;
+            var create = await _postService.Create(post, id, UserId);
+            var postDto = _mapper.Map<PostDto>(create);
+            return CreatedAtAction("GetById", new {id = create.Id}, postDto);
         }
 
 

@@ -11,10 +11,11 @@ namespace RedditClone.Services.Impl
         {
             _context = context;
         }
-        public async Task<Post> Create(Post post, int id)
+        public async Task<Post> Create(Post post, int id, string UserId)
         {
             var SubRedditId = await _context.Subreddits.FirstOrDefaultAsync(x => x.Id == id);
 
+            post.AppUserId = UserId;
             post.SubRedditId = id;
             var create = await _context.Posts.AddAsync(post);  
             await _context.SaveChangesAsync();
@@ -39,7 +40,7 @@ namespace RedditClone.Services.Impl
 
         public async Task<Post> GetById(int id)
         {
-            var postId = await _context.Posts.Include(x=>x.Comments).FirstOrDefaultAsync(x=>x.Id == id);
+            var postId = await _context.Posts.Include(x=>x.Comments).ThenInclude(t=>t.AppUser).FirstOrDefaultAsync(x=>x.Id == id);
             return postId;
         }
     }
