@@ -21,9 +21,9 @@ namespace RedditClone.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<SubredditDto>>> Get()
+        public async Task<ActionResult<List<SubredditDto>>> Get([FromQuery] PaginationFilterDto paginationFilterDto)
         {
-            var data = await _subRedditService.Get();
+            var data = await _subRedditService.Get(paginationFilterDto);
             if(data == null)
             {
                 return NotFound();

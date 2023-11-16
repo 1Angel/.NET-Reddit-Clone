@@ -82,4 +82,3 @@ C:\Users\lenovo\source\repos\RedditClone\RedditClone\bin\Debug\net7.0\Microsoft.
 C:\Users\lenovo\source\repos\RedditClone\RedditClone\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\lenovo\source\repos\RedditClone\RedditClone\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\lenovo\source\repos\RedditClone\RedditClone\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\lenovo\source\repos\RedditClone\RedditClone\obj\Debug\net7.0\RedditClone.sourcelink.json

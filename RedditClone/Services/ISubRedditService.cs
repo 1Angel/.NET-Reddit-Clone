@@ -8,7 +8,7 @@ namespace RedditClone.Services
         Task<SubReddit> Create(SubReddit subreddit, string UserId);
         Task<SubReddit> Update(SubReddit subreddit, int id);
         void Delete(int id);
-        Task<List<SubReddit>> Get();
+        Task<List<SubReddit>> Get(PaginationFilterDto paginationFilterDto);
         Task<SubReddit> GetById(int id);
         Task<List<SubReddit>> GetByTitle(SearchFilterDto searchFilterDto);
     }

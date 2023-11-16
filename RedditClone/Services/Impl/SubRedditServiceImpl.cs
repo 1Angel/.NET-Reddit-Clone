@@ -32,10 +32,13 @@ namespace RedditClone.Services.Impl
             }
         }
 
-        public async Task<List<SubReddit>> Get()
+        public async Task<List<SubReddit>> Get(PaginationFilterDto paginationFilterDto)
         {
-            var subreddit = await _context.Subreddits.ToListAsync();
-            return subreddit;
+            var subRedditQueryable = _context.Subreddits.AsQueryable();
+
+            var pagedData = await subRedditQueryable.OrderBy(x=>x.Id).Skip((paginationFilterDto.PageNumber -1) * paginationFilterDto.PageSize).Take(paginationFilterDto.PageSize).ToListAsync();
+
+            return pagedData;
         }
 
         public async Task<SubReddit> GetById(int id)
