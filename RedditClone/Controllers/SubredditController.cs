@@ -86,5 +86,18 @@ namespace RedditClone.Controllers
 
         }
 
+
+
+        [HttpGet("search")]
+        public async Task<ActionResult<List<SubReddit>>> GetByTitle([FromQuery] SearchFilterDto searchFilterDto)
+        {
+            var data = await _subRedditService.GetByTitle(searchFilterDto);
+            if(data == null)
+            {
+                return NotFound();
+            }
+            return data;
+        }
+
     }
 }

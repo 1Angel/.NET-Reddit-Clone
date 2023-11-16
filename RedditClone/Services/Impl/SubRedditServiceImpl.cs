@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RedditClone.Data;
+using RedditClone.Dtos;
 using RedditClone.Models;
 
 namespace RedditClone.Services.Impl
@@ -41,6 +42,20 @@ namespace RedditClone.Services.Impl
         {
             var subredditID = await _context.Subreddits.Include(a=>a.Posts).FirstOrDefaultAsync(x => x.Id == id);
             return subredditID;
+        }
+
+        public async Task<List<SubReddit>> GetByTitle(SearchFilterDto searchFilterDto)
+        {
+            var SubRedditQueryable = _context.Subreddits.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchFilterDto.SearchTerm))
+            {
+               SubRedditQueryable = SubRedditQueryable.Where(x=>x.Name.Contains(searchFilterDto.SearchTerm) || x.Description.Contains(searchFilterDto.SearchTerm));
+            }
+
+            var subReddit = await SubRedditQueryable.ToListAsync();
+
+            return subReddit;
         }
 
         public async Task<SubReddit> Update(SubReddit subreddit, int id)

@@ -8,5 +8,6 @@ namespace RedditClone.Services
         Task<List<Post>> Get();
         Task<Post> GetById(int id);
         void DeleteById(int id);
+        
     }
 }
