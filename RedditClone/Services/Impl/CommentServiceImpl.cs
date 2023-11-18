@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RedditClone.Data;
 using RedditClone.Models;
+using SQLitePCL;
 
 namespace RedditClone.Services.Impl
 {
@@ -11,8 +12,6 @@ namespace RedditClone.Services.Impl
         {
             _context = context;
         }
-
-        public AppDbContext Context { get; }
 
         public async Task<Comment> Create(Comment comment, int id, string UserId)
         {

@@ -2,7 +2,7 @@
 
 namespace RedditClone.Models
 {
-    public class AppUser: IdentityUser
+    public class AppUser : IdentityUser
     {
         public List<SubReddit> Subredits { get; set; }
         public List<Comment> Comments { get; set; }

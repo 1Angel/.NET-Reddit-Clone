@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using RedditClone.Dtos;
+using RedditClone.Models;
 
 namespace RedditClone.Services
 {
@@ -9,6 +10,6 @@ namespace RedditClone.Services
         Task<AuthReponse> Register(CreateUserDto createUserDto);
         Task<AuthReponse> Login(LoginUserDto loginUserDto);
 
-        string GeneratedToken(IdentityUser user);
+        string GeneratedToken(AppUser user);
     }
 }

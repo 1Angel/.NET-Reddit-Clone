@@ -4,9 +4,8 @@ namespace RedditClone.Dtos
 {
     public class UserInfoDto
     {
-        public virtual string Id { get; set; }
-        public virtual string? UserName { get; set; }
-        public virtual string? NormalizedUserName { get; set; }
-        public virtual string? Email { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
     }
 }

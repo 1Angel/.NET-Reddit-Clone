@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using RedditClone.Controllers;
 using RedditClone.Data;
+using RedditClone.Models;
 using RedditClone.Services;
 using RedditClone.Services.Impl;
 using System.Text;
@@ -23,7 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 //identity configuration
 builder.Services.Configure<IdentityOptions>(options =>
@@ -57,7 +58,6 @@ builder.Services.AddTransient<ISubRedditService, SubRedditServiceImpl>();
 builder.Services.AddTransient<IPostService, PostServiceImpl>(); 
 builder.Services.AddTransient<ICommentService, CommentServiceImpl>();
 builder.Services.AddTransient<IAuthService, AuthServiceImpl>();
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

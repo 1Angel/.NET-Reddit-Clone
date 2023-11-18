@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RedditClone.Dtos;
+using RedditClone.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -9,40 +10,41 @@ namespace RedditClone.Services.Impl
 {
     public class AuthServiceImpl : IAuthService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration _configuration;
-        public AuthServiceImpl(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public AuthServiceImpl(UserManager<AppUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
         }
 
-        public string GeneratedToken(IdentityUser user)
+        public string GeneratedToken(AppUser user)
         {
+            {
 
-            var key = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:JwtSecretKey").Value);
+                var key = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:JwtSecretKey").Value);
 
-            var jwtHandler = new JwtSecurityTokenHandler();
+                var jwtHandler = new JwtSecurityTokenHandler();
 
-            var claim = new List<Claim>()
+                var claim = new List<Claim>()
             {
                 new Claim("Id", user.Id),
                 new Claim("UserName", user.UserName),
                 new Claim("Email", user.Email)
             };
 
-            var expire = DateTime.Now.AddMonths(1);
-            var SignalCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
-            var securityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claim, expires: expire, signingCredentials: SignalCredentials);
-            
-            var token = jwtHandler.WriteToken(securityToken);
-            return token;
-        }
+                var expire = DateTime.Now.AddMonths(1);
+                var SignalCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+                var securityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claim, expires: expire, signingCredentials: SignalCredentials);
 
+                var token = jwtHandler.WriteToken(securityToken);
+                return token;
+            }
+        }
         public async Task<AuthReponse> Login(LoginUserDto loginUserDto)
         {
             var emailExist = await _userManager.FindByEmailAsync(loginUserDto.Email);
-            if(emailExist == null)
+            if (emailExist == null)
             {
                 return new AuthReponse()
                 {
@@ -85,17 +87,17 @@ namespace RedditClone.Services.Impl
                 };
             }
 
-            var user = new IdentityUser()
+            var user = new AppUser()
             {
                 UserName = createUserDto.UserName,
                 Email = createUserDto.Email,
             };
 
             var create = await _userManager.CreateAsync(user, createUserDto.Password);
-            if(!create.Succeeded) 
+            if (!create.Succeeded)
             {
                 string errorsMessage = "Errors: ";
-                foreach(var error in create.Errors)
+                foreach (var error in create.Errors)
                 {
                     errorsMessage += " " + error.Description;
                 }
@@ -120,6 +122,5 @@ namespace RedditClone.Services.Impl
         }
     }
 
-          
-        
+
 }
