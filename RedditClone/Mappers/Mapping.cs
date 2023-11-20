@@ -30,7 +30,7 @@ namespace RedditClone.Mappers
         
 
             //identity
-            CreateMap<AppUser, UserInfoDto>();
+            CreateMap<AppUser, UserDto>();
         }
     }
 }

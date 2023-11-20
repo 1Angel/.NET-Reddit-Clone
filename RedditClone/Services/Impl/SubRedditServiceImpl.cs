@@ -44,7 +44,7 @@ namespace RedditClone.Services.Impl
 
         public async Task<SubReddit> GetById(int id)
         {
-            var subredditID = await _context.Subreddits.Include(a=>a.Posts).FirstOrDefaultAsync(x => x.Id == id);
+            var subredditID = await _context.Subreddits.Include(a=>a.Posts).ThenInclude(a=>a.AppUser).FirstOrDefaultAsync(x => x.Id == id);
             return subredditID;
         }
 
