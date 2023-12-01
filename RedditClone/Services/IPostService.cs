@@ -1,4 +1,5 @@
-﻿using RedditClone.Models;
+﻿using RedditClone.Dtos;
+using RedditClone.Models;
 
 namespace RedditClone.Services
 {
@@ -7,7 +8,7 @@ namespace RedditClone.Services
         Task<Post> Create(Post post, int id, string UserId);
         Task<List<Post>> Get();
         Task<Post> GetById(int id);
-        void DeleteById(int id);
+        Task<ResponseDto> DeleteById(int id, string userId);
         
     }
 }

@@ -27,7 +27,10 @@ namespace RedditClone.Mappers
             CreateMap<CreateCommentDto, Comment>();
 
             CreateMap<Comment, CommentDto>();
-        
+
+            //bookmark
+
+
 
             //identity
             CreateMap<AppUser, UserDto>();

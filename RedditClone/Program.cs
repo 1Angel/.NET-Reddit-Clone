@@ -54,6 +54,7 @@ builder.Services.AddAuthentication(options =>
 
 
 //services
+builder.Services.AddTransient<IBookmarkService, BookmarkService>();
 builder.Services.AddTransient<ISubRedditService, SubRedditServiceImpl>();
 builder.Services.AddTransient<IPostService, PostServiceImpl>(); 
 builder.Services.AddTransient<ICommentService, CommentServiceImpl>();

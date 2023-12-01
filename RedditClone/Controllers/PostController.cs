@@ -46,16 +46,23 @@ namespace RedditClone.Controllers
             return Ok(post);
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> Delete([FromRoute] int id)
+        public async Task<ActionResult<ResponseDto>> Delete([FromRoute] int id)
         {
+            var userId = User.Claims.Where(x=>x.Type == "Id").FirstOrDefault()?.Value;  
+
             var postId = await _postService.GetById(id);
             if(postId == null)
             {
                 return NotFound();
             }
-            _postService.DeleteById(id);
-            return Ok();
+            var postDelete = await _postService.DeleteById(id, userId);
+            if(postDelete == null)
+            {
+                return NotFound(postDelete);
+            }
+            return Ok(postDelete);
 
         }
     }

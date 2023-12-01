@@ -12,6 +12,7 @@ namespace RedditClone.Data
         public DbSet<SubReddit> Subreddits { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<BookMark> Bookmarks { get; set; }
 
 
     }

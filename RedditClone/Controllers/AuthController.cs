@@ -48,7 +48,6 @@ namespace RedditClone.Controllers
             var email = User.Claims.Where(x=>x.Type == "Email").FirstOrDefault();
             return user + " "+email;
         }
-
        
     }
 }
