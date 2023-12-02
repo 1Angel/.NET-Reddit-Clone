@@ -17,6 +17,7 @@ namespace RedditClone.Controllers
             _bookmarkService = bookmarkService;
         }
 
+        [Authorize]
         [HttpPost("bookmark/{id}")]
         public async Task<ActionResult<ResponseDto>> Save([FromRoute] int id)
         {
